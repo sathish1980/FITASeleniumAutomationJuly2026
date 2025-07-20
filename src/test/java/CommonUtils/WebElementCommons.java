@@ -66,8 +66,9 @@ public class WebElementCommons {
 		return null;
 	}
 	
-	public static String GetScreenshot(WebDriver browser,String filename) throws IOException
+	public static String GetScreenshot(WebDriver browser,String filename) throws IOException, InterruptedException
 	{
+		Thread.sleep(10000);
 		TakesScreenshot screen = (TakesScreenshot)browser;
 		File sourceFile = screen.getScreenshotAs(OutputType.FILE);
 		File DestinationFile = new File(System.getProperty("user.dir")+"//Screenshot//"+filename+".png");
