@@ -3,11 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="BasicsofTestng.TestNgBasics">
+      <class name="TestCase.MakeMyTripFlightSearch">
         <methods>
-          <include name="FirstTestcase"/>
+          <include name="TearDown"/>
+          <include name="OpenTheBrowser"/>
+          <include name="MakeMyTripFlightSearchWithValidValues"/>
+          <include name="WriteInReport"/>
+          <include name="LaunchMakeMyTrip"/>
         </methods>
-      </class> <!-- BasicsofTestng.TestNgBasics -->
+      </class> <!-- TestCase.MakeMyTripFlightSearch -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

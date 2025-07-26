@@ -31,6 +31,11 @@ public class WebElementCommons {
 		return driver.getTitle();
 	}
 	
+	public static String GetCurrentUrl(WebDriver driver)
+	{
+		return driver.getCurrentUrl();
+	}
+	
 	public static void EnterText(WebElement element,String TexttoBeEnter)
 	{
 		if(element.isDisplayed())
@@ -83,6 +88,12 @@ public class WebElementCommons {
 		wait.until(ExpectedConditions.elementToBeClickable(Element));
 		
 	}
+	public static void WaitForClickable(WebDriver driver,WebElement Element)
+	{
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.elementToBeClickable(Element));
+		
+	}
 	
 	public static void WaitForVisible(WebDriver driver,By Element)
 	{
@@ -91,5 +102,6 @@ public class WebElementCommons {
 		
 	}
 	
-
+	
+	
 }

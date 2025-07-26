@@ -2,6 +2,7 @@ package TestCase;
 
 import java.io.IOException;
 
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -9,6 +10,9 @@ import com.aventstack.extentreports.Status;
 
 import BrowserUtils.OPenBrowser;
 import CommonUtils.WebElementCommons;
+import Pages.FlightSearchPage;
+import Pages.HomePage;
+import Utils.ExcelfileReadData;
 import Utils.PropertyFileRead;
 
 public class MakeMyTripFlightSearch extends OPenBrowser{
@@ -30,13 +34,52 @@ public class MakeMyTripFlightSearch extends OPenBrowser{
 		WebElementCommons.OpentheApplication(browser,url);
 	}
 	
-	@Test
-	public void MakeMyTripFlightSearchWithValidValues()
+	@Test(priority =0)
+	public void MakeMyTripFlightSearchWithValidValues() throws InterruptedException
 	{
 		test = extent.createTest("SearchWithValidValues Testcase");
-		test.log(Status.INFO, "Enter user name");
-		test.log(Status.INFO, "Enter password");
-		test.log(Status.INFO, "Enter login button");
+		HomePage H = new HomePage(browser);
+		H.closeAccountinfoPopup();
+		test.log(Status.INFO, "Pop closed succesfully");
+		FlightSearchPage Fs = new FlightSearchPage(browser);
+		Fs.ClickFromLocationdropdown();
+		test.log(Status.INFO, "Dropdown clikced");
+		Fs.SelectValueFromList("BOM");
+		test.log(Status.INFO, "From selected as BOM");
+		Fs.ClickToLocationdropdown();
+		test.log(Status.INFO, "To Dropdown clikced");
+		Fs.SelectValueFromList("MAA");
+		test.log(Status.INFO, "To selected as MAA");
+		Fs.SelectDate("28");
+		test.log(Status.INFO, "Date selected sucessfully");
+		Fs.clickOnSearchbutton();
+		test.log(Status.INFO, "Searchbutton clikced");
+		
+		Assert.assertEquals(Fs.GetSearchResult(), "200-OK");
+	}
+	
+	@Test(priority=1,dataProvider="GetValidflightSearchTestdata",dataProviderClass=DataProviderclass.class)
+	public void MakeMyTripFlightSearchWithValidValuesusingmultipledata(String from,String to,String date) throws InterruptedException
+	{
+		test = extent.createTest("SearchWithValidValues with muitple data Testcase");
+		WebElementCommons.ClickBackButton(browser);
+		FlightSearchPage Fs = new FlightSearchPage(browser);
+		Fs.ClickFromLocationdropdown();
+		test.log(Status.INFO, "Dropdown clikced");
+		Fs.SelectValueFromList(from);
+		test.log(Status.INFO, "From selected as BOM");
+		Fs.ClickToLocationdropdown();
+		test.log(Status.INFO, "To Dropdown clikced");
+		Fs.SelectValueFromList(to);
+		test.log(Status.INFO, "To selected as MAA");
+		Fs.SelectDate(date);
+		test.log(Status.INFO, "Date selected sucessfully");
+		Fs.clickOnSearchbutton();
+		test.log(Status.INFO, "Searchbutton clikced");
+		
+		Assert.assertEquals(Fs.GetSearchResult(), "200-OK");
+		Assert.assertEquals(Fs.getFromLocation(), from.toUpperCase());
+		Assert.assertEquals(Fs.getToLocation(), to.toUpperCase());
 	}
 	
 	@AfterMethod
@@ -59,7 +102,7 @@ public class MakeMyTripFlightSearch extends OPenBrowser{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void MakeMyTripFlightSearchWithinValidValues()
 	{
 		test = extent.createTest("SearchWithinValidValues Testcase");
@@ -74,5 +117,7 @@ public class MakeMyTripFlightSearch extends OPenBrowser{
 		CloseReport();
 		browser.quit();
 	}
+	
+	
 
 }

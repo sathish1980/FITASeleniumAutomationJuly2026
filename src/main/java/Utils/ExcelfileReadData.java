@@ -16,12 +16,12 @@ public class ExcelfileReadData {
 	
 	static String filepath=System.getProperty("user.dir")+"\\Input\\MakeMytrip.xlsx";
 	static Object[][] value;
-	public static Object[][] ReadData() throws IOException
+	public static Object[][] ReadData(String sheetName) throws IOException
 	{
 		File F = new File(filepath);
 		FileInputStream Fs = new FileInputStream(F);
 		XSSFWorkbook workbook = new XSSFWorkbook(Fs);
-		Sheet sheet = workbook.getSheet("ValidData");
+		Sheet sheet = workbook.getSheet(sheetName);
 		int totalRows = sheet.getPhysicalNumberOfRows();
 		Row row1 = sheet.getRow(1);
 		int totalcoumns = row1.getLastCellNum();
